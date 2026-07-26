@@ -23,6 +23,7 @@
                         'ecuc-graphite': '#121214',
                         'ecuc-gold': '#D4AF37',
                         'ecuc-gold-dim': '#AA8C2C',
+                        'ecuc-gold-light': '#F9F1CC',
                     },
                     fontFamily: {
                         'serif': ['"Playfair Display"', 'serif'],
@@ -41,6 +42,15 @@
             overflow-x: hidden;
         }
         
+        /* Ocultar barra de desplazamiento visualmente pero permitir scroll si es necesario */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
         /* Transiciones SPA */
         .fade-transition {
             transition: opacity 0.6s ease-in-out, visibility 0.6s;
@@ -48,7 +58,7 @@
         .fade-out { opacity: 0; visibility: hidden; }
         .fade-in { opacity: 1; visibility: visible; }
 
-        /* Efectos ADN */
+        /* Efectos de Texto Dorado */
         .text-gradient-gold {
             background: linear-gradient(to right, #AA8C2C, #F9F1CC, #D4AF37, #AA8C2C);
             -webkit-background-clip: text;
@@ -59,6 +69,7 @@
         }
         @keyframes shine { to { background-position: 200% center; } }
         
+        /* Animaciones base */
         .loader-ring {
             border: 2px solid rgba(212, 175, 55, 0.1);
             border-top: 2px solid #D4AF37;
@@ -77,7 +88,7 @@
             100% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
         }
 
-        /* --- Estilos para la Mesa de Trabajo Virtual --- */
+        /* --- Mesa de Trabajo Virtual --- */
         .yeast-glass {
             background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
             backdrop-filter: blur(2px);
@@ -96,8 +107,6 @@
             box-shadow: 0 0 40px rgba(212, 175, 55, 0.4);
             border-color: #D4AF37;
         }
-        
-        /* Animación de burbujas */
         .bubble {
             position: absolute;
             background: rgba(212, 175, 55, 0.6);
@@ -109,12 +118,61 @@
             0% { transform: translateY(0) scale(1); opacity: 1; }
             100% { transform: translateY(-80px) scale(1.5); opacity: 0; }
         }
+
+        /* --- Sello Dorado 3D --- */
+        .ecuc-seal {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #AA8C2C 0%, #F9F1CC 40%, #D4AF37 60%, #AA8C2C 100%);
+            box-shadow: 
+                inset 0 0 15px rgba(0, 0, 0, 0.6), 
+                inset 0 0 5px rgba(255, 255, 255, 0.8),
+                0 10px 20px rgba(0, 0, 0, 0.8),
+                0 0 15px rgba(212, 175, 55, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            z-index: 50;
+            opacity: 0;
+            transform: scale(3) translateY(-200px) rotate(-30deg);
+        }
+        .ecuc-seal-inner {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 2px dashed rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        /* Clase para accionar la animación del sello */
+        .stamp-it {
+            animation: stampDrop 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation-delay: 0.5s;
+        }
+        @keyframes stampDrop {
+            0% { 
+                opacity: 0; 
+                transform: scale(3) translateY(-150px) rotate(-30deg); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1) translateY(0) rotate(15deg); 
+            }
+        }
     </style>
 </head>
-<body class="font-sans antialiased min-h-screen flex flex-col selection:bg-ecuc-gold selection:text-ecuc-black">
+<body class="font-sans antialiased h-screen flex flex-col selection:bg-ecuc-gold selection:text-ecuc-black overflow-hidden">
 
     <!-- Encabezado Fijo -->
-    <header class="fixed top-0 w-full z-50 bg-ecuc-black/90 backdrop-blur-md border-b border-ecuc-gold/20 p-6">
+    <header class="fixed top-0 w-full z-50 bg-ecuc-black/90 backdrop-blur-md border-b border-ecuc-gold/20 p-4 md:p-6">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <div class="text-xl font-serif tracking-widest uppercase text-white">
                 ECUC <span class="text-ecuc-gold font-sans text-sm tracking-normal ml-2 opacity-80 hidden md:inline">El Laboratorio Comestible</span>
@@ -125,11 +183,11 @@
         </div>
     </header>
 
-    <!-- Contenedor Principal (GRID) - Esto arregla el título oculto -->
-    <main id="app-container" class="flex-grow pt-32 pb-12 px-6 max-w-6xl mx-auto w-full grid grid-cols-1 grid-rows-1">
+    <!-- Contenedor Principal (GRID) -->
+    <main id="app-container" class="flex-grow pt-24 pb-8 px-4 md:px-6 max-w-6xl mx-auto w-full grid grid-cols-1 grid-rows-1 h-full overflow-hidden relative">
         
         <!-- PANTALLA 1: Test Sensorial -->
-        <section id="screen-0" class="screen-section col-start-1 row-start-1 w-full fade-transition fade-in flex flex-col items-center justify-start min-h-[70vh]">
+        <section id="screen-0" class="screen-section col-start-1 row-start-1 w-full fade-transition fade-in flex flex-col items-center justify-start h-full overflow-y-auto scrollbar-hide pb-10">
             <h1 class="text-3xl md:text-5xl lg:text-6xl font-serif text-ecuc-gold mb-4 text-center mt-4">
                 ¿Qué despierta tu instinto creativo?
             </h1>
@@ -140,39 +198,36 @@
                 (Haz clic en la imagen que mejor represente tu inspiración)
             </p>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full group">
-                <!-- Opción A -->
-                <div onclick="app.selectProfile('panaderia')" class="relative cursor-pointer rounded-xl overflow-hidden border border-ecuc-gold/20 transition-all duration-500 hover:scale-105 hover:border-ecuc-gold hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] opacity-100 md:group-hover:opacity-40 hover:!opacity-100 bg-ecuc-graphite h-80 md:h-[400px] flex items-end">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full group pb-10">
+                <div onclick="app.selectProfile('panaderia')" class="relative cursor-pointer rounded-xl overflow-hidden border border-ecuc-gold/20 transition-all duration-500 hover:scale-105 hover:border-ecuc-gold hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] opacity-100 md:group-hover:opacity-40 hover:!opacity-100 bg-ecuc-graphite h-80 flex items-end">
                     <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=800&auto=format&fit=crop" alt="Pan Rústico" class="absolute inset-0 w-full h-full object-cover z-0 opacity-70">
                     <div class="absolute inset-0 bg-gradient-to-t from-ecuc-black via-ecuc-black/60 to-transparent z-10"></div>
                     <div class="relative z-20 p-6 w-full text-center flex flex-col h-full justify-end">
                         <span class="text-xs uppercase tracking-[0.3em] text-ecuc-gold/80 mb-2 block">Opción A</span>
                         <h3 class="text-xl md:text-2xl font-serif text-white mb-2">Fuego y Fermentación</h3>
-                        <p class="text-xs md:text-sm text-white/70 font-light mb-4 md:mb-6">Pan rústico, texturas crujientes, el poder del calor y el tiempo de espera.</p>
+                        <p class="text-xs md:text-sm text-white/70 font-light mb-4">Pan rústico, texturas crujientes, el poder del calor y el tiempo de espera.</p>
                         <div class="text-[10px] md:text-xs uppercase tracking-widest border border-ecuc-gold text-ecuc-gold py-2 px-4 rounded-full self-center transition-colors hover:bg-ecuc-gold hover:text-ecuc-black">Elegir respuesta</div>
                     </div>
                 </div>
 
-                <!-- Opción B -->
-                <div onclick="app.selectProfile('reposteria')" class="relative cursor-pointer rounded-xl overflow-hidden border border-ecuc-gold/20 transition-all duration-500 hover:scale-105 hover:border-ecuc-gold hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] opacity-100 md:group-hover:opacity-40 hover:!opacity-100 bg-ecuc-graphite h-80 md:h-[400px] flex items-end">
+                <div onclick="app.selectProfile('reposteria')" class="relative cursor-pointer rounded-xl overflow-hidden border border-ecuc-gold/20 transition-all duration-500 hover:scale-105 hover:border-ecuc-gold hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] opacity-100 md:group-hover:opacity-40 hover:!opacity-100 bg-ecuc-graphite h-80 flex items-end">
                     <img src="https://images.unsplash.com/photo-1603569283847-aa295f0d016a?q=80&w=800&auto=format&fit=crop" alt="Postre Glaseado" class="absolute inset-0 w-full h-full object-cover z-0 opacity-70">
                     <div class="absolute inset-0 bg-gradient-to-t from-ecuc-black via-ecuc-black/60 to-transparent z-10"></div>
                     <div class="relative z-20 p-6 w-full text-center flex flex-col h-full justify-end">
                         <span class="text-xs uppercase tracking-[0.3em] text-ecuc-gold/80 mb-2 block">Opción B</span>
                         <h3 class="text-xl md:text-2xl font-serif text-white mb-2">Simetría y Dulzura</h3>
-                        <p class="text-xs md:text-sm text-white/70 font-light mb-4 md:mb-6">Postres de vanguardia, alquimia del chocolate y capas sofisticadas.</p>
+                        <p class="text-xs md:text-sm text-white/70 font-light mb-4">Postres de vanguardia, alquimia del chocolate y capas sofisticadas.</p>
                         <div class="text-[10px] md:text-xs uppercase tracking-widest border border-ecuc-gold text-ecuc-gold py-2 px-4 rounded-full self-center transition-colors hover:bg-ecuc-gold hover:text-ecuc-black">Elegir respuesta</div>
                     </div>
                 </div>
 
-                <!-- Opción C -->
-                <div onclick="app.selectProfile('gastronomia')" class="relative cursor-pointer rounded-xl overflow-hidden border border-ecuc-gold/20 transition-all duration-500 hover:scale-105 hover:border-ecuc-gold hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] opacity-100 md:group-hover:opacity-40 hover:!opacity-100 bg-ecuc-graphite h-80 md:h-[400px] flex items-end">
+                <div onclick="app.selectProfile('gastronomia')" class="relative cursor-pointer rounded-xl overflow-hidden border border-ecuc-gold/20 transition-all duration-500 hover:scale-105 hover:border-ecuc-gold hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] opacity-100 md:group-hover:opacity-40 hover:!opacity-100 bg-ecuc-graphite h-80 flex items-end">
                     <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?q=80&w=800&auto=format&fit=crop" alt="Alta Cocina" class="absolute inset-0 w-full h-full object-cover z-0 opacity-70">
                     <div class="absolute inset-0 bg-gradient-to-t from-ecuc-black via-ecuc-black/60 to-transparent z-10"></div>
                     <div class="relative z-20 p-6 w-full text-center flex flex-col h-full justify-end">
                         <span class="text-xs uppercase tracking-[0.3em] text-ecuc-gold/80 mb-2 block">Opción C</span>
                         <h3 class="text-xl md:text-2xl font-serif text-white mb-2">Técnica y Deconstrucción</h3>
-                        <p class="text-xs md:text-sm text-white/70 font-light mb-4 md:mb-6">Alta cocina salada, técnicas moleculares y equilibrio absoluto de sabores.</p>
+                        <p class="text-xs md:text-sm text-white/70 font-light mb-4">Alta cocina salada, técnicas moleculares y equilibrio absoluto de sabores.</p>
                         <div class="text-[10px] md:text-xs uppercase tracking-widest border border-ecuc-gold text-ecuc-gold py-2 px-4 rounded-full self-center transition-colors hover:bg-ecuc-gold hover:text-ecuc-black">Elegir respuesta</div>
                     </div>
                 </div>
@@ -180,8 +235,7 @@
         </section>
 
         <!-- PANTALLA 2: ADN Culinario -->
-        <section id="screen-1" class="screen-section col-start-1 row-start-1 hidden w-full fade-transition fade-out flex-col items-center justify-center min-h-[60vh] z-10">
-            <!-- Loader -->
+        <section id="screen-1" class="screen-section col-start-1 row-start-1 hidden w-full fade-transition fade-out flex-col items-center justify-center h-full z-10">
             <div id="loading-state" class="flex flex-col items-center justify-center w-full fade-transition fade-in">
                 <div class="relative flex justify-center items-center mb-8 h-32 w-32">
                     <div class="loader-ring absolute w-24 h-24"></div>
@@ -192,8 +246,7 @@
                 <p class="text-sm font-light text-white/50 mt-4 tracking-widest uppercase">Decodificando alquimia sensorial</p>
             </div>
 
-            <!-- Resultado -->
-            <div id="reveal-state" class="hidden flex-col items-center justify-center text-center fade-transition fade-out w-full">
+            <div id="reveal-state" class="hidden flex-col items-center justify-center text-center fade-transition fade-out w-full pb-10">
                 <span class="text-sm uppercase tracking-[0.4em] text-white/50 mb-4 block mt-8">Análisis Completado</span>
                 <h2 id="adn-title" class="text-4xl md:text-6xl lg:text-7xl font-serif text-gradient-gold mb-6 py-2"></h2>
                 <p id="adn-desc" class="max-w-3xl mx-auto text-base md:text-xl opacity-90 font-light mb-12 text-white/80 leading-relaxed px-4"></p>
@@ -204,25 +257,19 @@
         </section>
 
         <!-- PANTALLA 3: Mesa de Trabajo Virtual -->
-        <section id="screen-2" class="screen-section col-start-1 row-start-1 hidden w-full fade-transition fade-out flex-col items-center justify-start z-10 pt-4">
-            
-            <h2 class="text-3xl md:text-5xl font-serif text-ecuc-gold mb-2 text-center">La Magia en tus Manos</h2>
-            <p class="max-w-2xl mx-auto text-base opacity-80 font-light mb-10 text-center text-white">
+        <section id="screen-2" class="screen-section col-start-1 row-start-1 hidden w-full fade-transition fade-out flex-col items-center justify-start h-full z-10 overflow-y-auto scrollbar-hide pb-20">
+            <h2 class="text-3xl md:text-5xl font-serif text-ecuc-gold mb-2 text-center mt-4">La Magia en tus Manos</h2>
+            <p class="max-w-2xl mx-auto text-base opacity-80 font-light mb-8 text-center text-white">
                 Experimenta el método científico en la cocina. <br/>
                 <strong class="text-ecuc-gold font-serif text-xl tracking-wide mt-2 block animate-pulse">Arrastra la levadura hacia la masa</strong>
             </p>
 
-            <!-- Entorno del Laboratorio -->
-            <div class="relative w-full max-w-3xl h-[400px] md:h-80 border border-ecuc-gold/20 bg-[#0f0f11] rounded-2xl p-8 flex flex-col md:flex-row items-center justify-around overflow-hidden shadow-2xl">
-                
-                <!-- Fondo de cuadrícula sutil -->
+            <div class="relative w-full max-w-3xl h-[350px] md:h-80 border border-ecuc-gold/20 bg-[#0f0f11] rounded-2xl p-8 flex flex-col md:flex-row items-center justify-around overflow-hidden shadow-2xl">
                 <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#D4AF37 1px, transparent 1px); background-size: 30px 30px;"></div>
 
-                <!-- Elemento Arrastrable: Levadura -->
                 <div id="yeast-flask" draggable="true" class="relative z-30 cursor-grab flex flex-col items-center group touch-none mb-8 md:mb-0">
                     <div class="w-16 h-24 yeast-glass border-2 border-white/20 rounded-b-2xl rounded-t-sm flex items-end justify-center pb-2 relative overflow-hidden transition-transform group-hover:scale-105">
                         <div class="w-full h-12 bg-ecuc-gold/60 rounded-b-xl relative">
-                            <!-- Partículas simuladas -->
                             <div class="absolute top-1 left-2 w-1 h-1 bg-white rounded-full opacity-70"></div>
                             <div class="absolute top-4 left-6 w-1.5 h-1.5 bg-white rounded-full opacity-50"></div>
                             <div class="absolute top-2 right-3 w-1 h-1 bg-white rounded-full opacity-80"></div>
@@ -231,20 +278,15 @@
                     <span class="text-xs uppercase tracking-widest text-ecuc-gold/70 mt-4 pointer-events-none">Levadura Activa</span>
                 </div>
 
-                <!-- Zona de Destino: Bowl con Masa -->
                 <div id="dough-bowl" class="relative z-20 flex flex-col items-center bowl-glow">
-                    <!-- Contenedor de burbujas -->
                     <div id="bubbles-area" class="absolute bottom-full mb-2 w-full h-32 pointer-events-none flex justify-center"></div>
-                    
                     <div class="w-48 h-24 border-b-4 border-l-4 border-r-4 border-white/20 rounded-b-full flex items-end justify-center relative overflow-hidden bg-black/40">
-                        <!-- La Masa -->
                         <div id="dough-mass" class="w-40 h-16 bg-[#C4A982] rounded-t-full dough-growth shadow-inner relative"></div>
                     </div>
                     <span class="text-xs uppercase tracking-widest text-white/50 mt-4">Masa Culinaria</span>
                 </div>
             </div>
 
-            <!-- Botón de avance (Oculto al inicio) -->
             <div id="action-bake" class="opacity-0 invisible transition-all duration-1000 mt-10">
                 <button onclick="app.nextScreen()" class="px-10 py-4 border border-ecuc-gold text-ecuc-gold hover:bg-ecuc-gold hover:text-ecuc-black transition-all duration-300 uppercase tracking-widest text-sm font-semibold shadow-[0_0_15px_rgba(212,175,55,0.2)]">
                     Hornear y Sellar
@@ -252,15 +294,63 @@
             </div>
         </section>
 
-        <!-- PANTALLA 4: Sello Dorado -->
-        <section id="screen-3" class="screen-section col-start-1 row-start-1 hidden w-full fade-transition fade-out flex-col items-center justify-center z-10 pt-4">
-            <h2 class="text-4xl md:text-6xl font-serif text-ecuc-gold mb-6">Pasaporte Culinario</h2>
-            <p class="max-w-2xl mx-auto text-lg opacity-80 font-light mb-10 text-center">
-                Tu experiencia ha concluido con éxito. Has demostrado tener lo necesario para dominar el método científico.
-            </p>
-            <button onclick="app.resetExperience()" class="px-8 py-3 bg-ecuc-gold text-ecuc-black hover:bg-ecuc-gold-dim transition-all duration-300 uppercase tracking-widest text-sm font-semibold">
-                Iniciar Nueva Experiencia
+        <!-- PANTALLA 4: El Gran Cierre (NUEVO) -->
+        <section id="screen-3" class="screen-section col-start-1 row-start-1 hidden w-full fade-transition fade-out flex-col items-center justify-start h-full z-10 overflow-y-auto scrollbar-hide pb-20">
+            
+            <!-- Lienzo del Pasaporte -->
+            <div class="relative bg-ecuc-graphite border border-ecuc-gold/30 rounded-xl p-8 md:p-12 max-w-2xl w-full text-center mt-6 shadow-[0_10px_30px_rgba(0,0,0,0.8)] overflow-hidden">
+                <span class="text-xs uppercase tracking-[0.4em] text-white/50 block mb-2">Invitado Oficial</span>
+                <h2 class="text-3xl md:text-4xl font-serif text-white mb-2">Pasaporte Culinario</h2>
+                <div class="h-px w-24 bg-ecuc-gold/50 mx-auto mb-6"></div>
+                
+                <p class="text-sm font-light text-white/70 uppercase tracking-widest mb-1">Título Obtenido:</p>
+                <!-- Aquí inyectamos el título ganado -->
+                <h3 id="passport-title" class="text-2xl md:text-3xl font-serif text-ecuc-gold mb-4"></h3>
+
+                <!-- El Sello Dorado 3D (Animado) -->
+                <div id="gold-seal" class="ecuc-seal">
+                    <div class="ecuc-seal-inner">
+                        <span class="text-[#4A3B12] font-serif font-bold text-xl tracking-wider leading-none mb-1">ECUC</span>
+                        <div class="h-[1px] w-12 bg-[#4A3B12]/40 mb-1"></div>
+                        <span class="text-[#4A3B12] font-sans font-bold text-[8px] uppercase tracking-widest leading-tight">Sello<br>Dorado</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copy de Cierre Persuasivo -->
+            <div class="max-w-3xl text-center mt-10 px-4">
+                <p class="text-lg md:text-xl font-serif italic text-white/90 leading-relaxed">
+                    "¡Tu talento es innegable! Valida tu sello inscribiéndote hoy en nuestros diplomados en Guadalajara o Querétaro. Desbloquea nuevas insignias cada semana y accede a nuestra plataforma de neuroeducación para dominar el inglés gastronómico y llevar tu futuro negocio al siguiente nivel"
+                </p>
+            </div>
+
+            <!-- Bloque de Alianzas -->
+            <div class="w-full max-w-4xl mt-12 mb-10">
+                <h4 class="text-center text-xs uppercase tracking-[0.3em] text-ecuc-gold/60 mb-6">Alianzas de Neuroaprendizaje</h4>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    <!-- Tarjeta Discovery -->
+                    <div class="bg-[#151518] border border-white/5 rounded-lg p-6 hover:border-ecuc-gold/30 transition-colors text-left flex flex-col justify-center">
+                        <h5 class="text-ecuc-gold font-serif text-xl mb-2">Discovery Max Neuroeducation</h5>
+                        <p class="text-sm text-white/60 font-light">Especialízate y domina el inglés técnico gastronómico fluido para traspasar fronteras.</p>
+                    </div>
+                    
+                    <!-- Tarjeta Dalpa -->
+                    <div class="bg-[#151518] border border-white/5 rounded-lg p-6 hover:border-ecuc-gold/30 transition-colors text-left flex flex-col justify-center">
+                        <h5 class="text-ecuc-gold font-serif text-xl mb-2">Dalpa Max Neuroeducation</h5>
+                        <p class="text-sm text-white/60 font-light">Entrenamiento mental élite para potenciar tu velocidad de lectura y aprendizaje hasta 10 veces más rápido.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Final -->
+            <button onclick="window.open('https://wa.me/1234567890', '_blank')" class="pulse-gold-btn px-12 py-5 bg-gradient-to-r from-[#D4AF37] to-[#F9F1CC] text-[#0B0B0C] uppercase tracking-[0.2em] text-sm font-bold rounded-sm hover:scale-105 transition-transform duration-300">
+                Asegurar mi Lugar por WhatsApp
             </button>
+            <button onclick="app.resetExperience()" class="mt-8 text-xs text-white/40 uppercase tracking-widest hover:text-white transition-colors pb-10">
+                Reiniciar Experiencia
+            </button>
+
         </section>
 
     </main>
@@ -290,7 +380,7 @@
 
             init() {
                 this.updateProgress();
-                this.initLabInteraction(); // Inicializar el mini-juego drag & drop
+                this.initLabInteraction(); 
             },
 
             selectProfile(seleccion) {
@@ -330,7 +420,26 @@
                 const currentSection = document.getElementById(this.screens[this.currentIndex]);
                 this.currentIndex++;
                 const nextSection = document.getElementById(this.screens[this.currentIndex]);
+                
+                // Si vamos a la última pantalla, preparamos el contenido y la animación del sello
+                if (this.currentIndex === 3) {
+                    this.prepararCierre();
+                }
+
                 this.transitionBetween(currentSection, nextSection);
+            },
+
+            prepararCierre() {
+                // 1. Inyectamos el título en el pasaporte
+                const titleElement = document.getElementById('passport-title');
+                titleElement.innerHTML = dataPerfiles[this.perfilUsuario].titulo;
+
+                // 2. Reiniciamos y disparamos la animación del sello dorado
+                const seal = document.getElementById('gold-seal');
+                seal.classList.remove('stamp-it');
+                // Forzamos un reflow para que la animación se reinicie
+                void seal.offsetWidth; 
+                seal.classList.add('stamp-it');
             },
 
             resetExperience() {
@@ -340,7 +449,7 @@
                 this.perfilUsuario = null; 
                 const firstSection = document.getElementById(this.screens[0]);
                 
-                // Reiniciar mesa de trabajo visualmente
+                // Reiniciar mesa de trabajo
                 document.getElementById('yeast-flask').style.display = 'flex';
                 document.getElementById('yeast-flask').style.transform = 'translate(0px, 0px)';
                 document.getElementById('dough-bowl').classList.remove('active');
@@ -359,6 +468,8 @@
                 setTimeout(() => {
                     hideSection.classList.add('hidden');
                     showSection.classList.remove('hidden');
+                    // Aseguramos que el scroll regrese arriba al cambiar de pantalla
+                    showSection.scrollTop = 0;
                     setTimeout(() => {
                         showSection.classList.remove('fade-out');
                         showSection.classList.add('fade-in');
@@ -374,13 +485,12 @@
                 progressBar.style.width = `${percentage}%`;
             },
 
-            // --- Lógica del Mini-Juego Drag and Drop ---
+            // --- Lógica del Drag and Drop ---
             initLabInteraction() {
                 const yeast = document.getElementById('yeast-flask');
                 const bowl = document.getElementById('dough-bowl');
                 let hasFermented = false;
 
-                // 1. Eventos Nativos de Escritorio (Mouse)
                 yeast.addEventListener('dragstart', (e) => {
                     if (hasFermented) e.preventDefault();
                     e.dataTransfer.setData('text/plain', 'levadura');
@@ -391,13 +501,13 @@
                 bowl.addEventListener('dragover', (e) => e.preventDefault());
                 bowl.addEventListener('drop', (e) => {
                     e.preventDefault();
-                    if (!hasFermented) this.activarFermentacion(yeast, bowl);
-                    hasFermented = true;
+                    if (!hasFermented) {
+                        this.activarFermentacion(yeast, bowl);
+                        hasFermented = true;
+                    }
                 });
 
-                // 2. Eventos Táctiles (Celulares / Tablets)
                 let initialX = 0, initialY = 0;
-                
                 yeast.addEventListener('touchstart', (e) => {
                     if (hasFermented) return;
                     const touch = e.touches[0];
@@ -408,7 +518,7 @@
 
                 yeast.addEventListener('touchmove', (e) => {
                     if (hasFermented) return;
-                    e.preventDefault(); // Evita que la pantalla haga scroll mientras se arrastra
+                    e.preventDefault(); 
                     const touch = e.touches[0];
                     const currentX = touch.clientX - initialX;
                     const currentY = touch.clientY - initialY;
@@ -421,34 +531,27 @@
                     if (hasFermented) return;
                     yeast.classList.remove('opacity-80', 'scale-110');
                     
-                    // Comprobar colisión entre la levadura y el bowl
                     const rectYeast = yeast.getBoundingClientRect();
                     const rectBowl = bowl.getBoundingClientRect();
                     
-                    // Si el elemento arrastrado se superpone con el bowl
                     if (rectYeast.right > rectBowl.left && rectYeast.left < rectBowl.right &&
                         rectYeast.bottom > rectBowl.top && rectYeast.top < rectBowl.bottom) {
                         this.activarFermentacion(yeast, bowl);
                         hasFermented = true;
                     } else {
-                        // Si falló, regresa a la posición original suavemente
                         yeast.style.transition = 'transform 0.4s ease';
                         yeast.style.transform = 'translate(0px, 0px)';
                         yeast.xOffset = 0; yeast.yOffset = 0;
-                        setTimeout(() => yeast.style.transition = '', 400); // Quita la transición para permitir drag de nuevo
+                        setTimeout(() => yeast.style.transition = '', 400); 
                     }
                 });
             },
 
             activarFermentacion(yeastElement, bowlElement) {
-                // 1. Ocultar la levadura mágicamente
                 yeastElement.style.display = 'none';
-                
-                // 2. Iluminar el bowl y crecer la masa
                 bowlElement.classList.add('active');
                 document.getElementById('dough-mass').classList.add('fermenting-dough');
 
-                // 3. Generar burbujas animadas (Efecto Químico)
                 const bubblesArea = document.getElementById('bubbles-area');
                 let bubbleCount = 0;
                 
@@ -457,24 +560,18 @@
                         clearInterval(bubbleInterval);
                         return;
                     }
-                    
                     const bubble = document.createElement('div');
                     bubble.classList.add('bubble');
-                    // Tamaño aleatorio entre 8px y 16px
                     const size = Math.random() * 8 + 8;
                     bubble.style.width = `${size}px`;
                     bubble.style.height = `${size}px`;
-                    // Posición horizontal aleatoria dentro del área central
                     bubble.style.left = `${Math.random() * 60 + 20}%`;
-                    
                     bubblesArea.appendChild(bubble);
                     
-                    // Limpiar la burbuja del DOM después de su animación
                     setTimeout(() => bubble.remove(), 2000);
                     bubbleCount++;
-                }, 200); // Aparece una burbuja cada 200ms
+                }, 200); 
 
-                // 4. Mostrar el botón final después de que termine la reacción (3 segundos)
                 setTimeout(() => {
                     const btnFinal = document.getElementById('action-bake');
                     btnFinal.classList.replace('opacity-0', 'opacity-100');
@@ -483,7 +580,6 @@
             }
         };
 
-        // Iniciar
         document.addEventListener('DOMContentLoaded', () => {
             app.init();
         });
