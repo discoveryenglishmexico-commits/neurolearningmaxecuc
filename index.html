@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECUC - El Laboratorio Comestible</title>
+    
+    <!-- Google Fonts: Playfair Display (Serif) e Inter (Sans-serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configuración personalizada de Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ecuc-black': '#0B0B0C',
+                        'ecuc-graphite': '#121214',
+                        'ecuc-gold': '#D4AF37',
+                        'ecuc-gold-dim': '#AA8C2C', // Un tono más oscuro para efectos hover
+                    },
+                    fontFamily: {
+                        'serif': ['"Playfair Display"', 'serif'],
+                        'sans': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Estilos personalizados para las transiciones -->
+    <style>
+        body {
+            background-color: #0B0B0C;
+            color: #FFFFFF;
+        }
+        
+        /* Clases para manejar el desvanecimiento suave */
+        .fade-transition {
+            transition: opacity 0.6s ease-in-out;
+        }
+        
+        .fade-out {
+            opacity: 0;
+        }
+        
+        .fade-in {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col selection:bg-ecuc-gold selection:text-ecuc-black">
+
+    <!-- Encabezado / Header -->
+    <header class="fixed top-0 w-full z-50 bg-ecuc-black/90 backdrop-blur-md border-b border-ecuc-gold/20 p-6">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <!-- Logotipo Minimalista -->
+            <div class="text-xl font-serif tracking-widest uppercase text-white">
+                ECUC <span class="text-ecuc-gold font-sans text-sm tracking-normal ml-2 opacity-80">El Laboratorio Comestible</span>
+            </div>
+            
+            <!-- Menú Rápido -->
+            <nav class="hidden md:flex space-x-8 text-sm uppercase tracking-widest opacity-70">
+                <a href="#" class="hover:text-ecuc-gold transition-colors">Menú</a>
+                <a href="#" class="hover:text-ecuc-gold transition-colors">Manifiesto</a>
+            </nav>
+        </div>
+        
+        <!-- Indicador de Progreso -->
+        <div class="absolute bottom-0 left-0 h-[2px] bg-ecuc-gold/20 w-full">
+            <div id="progress-bar" class="h-full bg-ecuc-gold transition-all duration-700 ease-out w-0"></div>
+        </div>
+    </header>
+
+    <!-- Contenedor Principal (SPA) -->
+    <main id="app-container" class="flex-grow flex items-center justify-center pt-24 pb-12 px-6 max-w-6xl mx-auto w-full relative">
+        
+        <!-- PANTALLA 1: Test Sensorial -->
+        <section id="screen-0" class="screen-section w-full fade-transition fade-in text-center">
+            <h1 class="text-4xl md:text-6xl font-serif text-ecuc-gold mb-6">Test Sensorial</h1>
+            <p class="max-w-2xl mx-auto text-lg opacity-80 font-light mb-10">
+                El viaje comienza afinando tus sentidos. Prepárate para descubrir perfiles de sabor que desafiarán tu percepción.
+            </p>
+            <button onclick="app.nextScreen()" class="px-8 py-3 border border-ecuc-gold text-ecuc-gold hover:bg-ecuc-gold hover:text-ecuc-black transition-all duration-300 uppercase tracking-widest text-sm">
+                Comenzar Exploración
+            </button>
+        </section>
+
+        <!-- PANTALLA 2: ADN Culinario -->
+        <section id="screen-1" class="screen-section hidden w-full fade-transition fade-out text-center">
+            <h2 class="text-4xl md:text-6xl font-serif text-ecuc-gold mb-6">ADN Culinario</h2>
+            <p class="max-w-2xl mx-auto text-lg opacity-80 font-light mb-10">
+                Hemos analizado tus respuestas. Tu perfil de alquimia gastronómica está listo para ser revelado.
+            </p>
+            <button onclick="app.nextScreen()" class="px-8 py-3 border border-ecuc-gold text-ecuc-gold hover:bg-ecuc-gold hover:text-ecuc-black transition-all duration-300 uppercase tracking-widest text-sm">
+                Ir a la Mesa de Trabajo
+            </button>
+        </section>
+
+        <!-- PANTALLA 3: Mesa de Trabajo -->
+        <section id="screen-2" class="screen-section hidden w-full fade-transition fade-out text-center">
+            <h2 class="text-4xl md:text-6xl font-serif text-ecuc-gold mb-6">Mesa de Trabajo</h2>
+            <p class="max-w-2xl mx-auto text-lg opacity-80 font-light mb-10">
+                Interactúa con los ingredientes. Mezcla, experimenta y descubre el balance perfecto en nuestro entorno virtual.
+            </p>
+            <button onclick="app.nextScreen()" class="px-8 py-3 border border-ecuc-gold text-ecuc-gold hover:bg-ecuc-gold hover:text-ecuc-black transition-all duration-300 uppercase tracking-widest text-sm">
+                Sellar Creación
+            </button>
+        </section>
+
+        <!-- PANTALLA 4: Sello Dorado y Pasaporte -->
+        <section id="screen-3" class="screen-section hidden w-full fade-transition fade-out text-center">
+            <h2 class="text-4xl md:text-6xl font-serif text-ecuc-gold mb-6">Pasaporte Culinario</h2>
+            <p class="max-w-2xl mx-auto text-lg opacity-80 font-light mb-10">
+                Tu experiencia ha concluido con éxito. Aquí tienes tu sello dorado, un testimonio de tu viaje por El Laboratorio Comestible.
+            </p>
+            <button onclick="app.resetExperience()" class="px-8 py-3 bg-ecuc-gold text-ecuc-black hover:bg-ecuc-gold-dim transition-all duration-300 uppercase tracking-widest text-sm font-semibold">
+                Iniciar Nueva Experiencia
+            </button>
+        </section>
+
+    </main>
+
+    <!-- Lógica de la Aplicación -->
+    <script>
+        // Estructura de datos para controlar las pantallas
+        const app = {
+            currentIndex: 0,
+            isTransitioning: false,
+            
+            // Definición de nuestra arquitectura de pantallas
+            screens: [
+                { id: 'screen-0', name: 'Test Sensorial' },
+                { id: 'screen-1', name: 'ADN Culinario' },
+                { id: 'screen-2', name: 'Mesa de Trabajo' },
+                { id: 'screen-3', name: 'Sello Dorado' }
+            ],
+
+            // Inicializar la aplicación
+            init() {
+                this.updateProgress();
+            },
+
+            // Función para avanzar a la siguiente pantalla
+            nextScreen() {
+                if (this.isTransitioning || this.currentIndex >= this.screens.length - 1) return;
+                
+                const currentSection = document.getElementById(`screen-${this.currentIndex}`);
+                this.currentIndex++;
+                const nextSection = document.getElementById(`screen-${this.currentIndex}`);
+                
+                this.transitionBetween(currentSection, nextSection);
+            },
+
+            // Función para reiniciar la experiencia
+            resetExperience() {
+                if (this.isTransitioning) return;
+                
+                const currentSection = document.getElementById(`screen-${this.currentIndex}`);
+                this.currentIndex = 0;
+                const firstSection = document.getElementById(`screen-0`);
+                
+                this.transitionBetween(currentSection, firstSection);
+            },
+
+            // Lógica de transición suave entre pantallas
+            transitionBetween(hideSection, showSection) {
+                this.isTransitioning = true;
+                
+                // 1. Iniciar desvanecimiento de la pantalla actual
+                hideSection.classList.remove('fade-in');
+                hideSection.classList.add('fade-out');
+                
+                // 2. Esperar a que termine la transición CSS (600ms)
+                setTimeout(() => {
+                    hideSection.classList.add('hidden');
+                    
+                    // Preparar y mostrar la nueva pantalla
+                    showSection.classList.remove('hidden');
+                    // Un pequeño retraso para asegurar que el navegador registre que quitamos el 'hidden'
+                    setTimeout(() => {
+                        showSection.classList.remove('fade-out');
+                        showSection.classList.add('fade-in');
+                        
+                        this.updateProgress();
+                        this.isTransitioning = false;
+                    }, 50);
+                    
+                }, 600);
+            },
+
+            // Actualiza la barra de progreso en el encabezado
+            updateProgress() {
+                const progressBar = document.getElementById('progress-bar');
+                // Calcula el porcentaje (ej. si estoy en la última pantalla es 100%)
+                const percentage = (this.currentIndex / (this.screens.length - 1)) * 100;
+                progressBar.style.width = `${percentage}%`;
+            }
+        };
+
+        // Arrancar la aplicación una vez que el DOM esté listo
+        document.addEventListener('DOMContentLoaded', () => {
+            app.init();
+        });
+    </script>
+</body>
+</html>
