@@ -10,10 +10,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS CDN para los estilos -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Configuración personalizada de Tailwind -->
+    <!-- Configuración personalizada de nuestros colores de lujo -->
     <script>
         tailwind.config = {
             theme: {
@@ -22,7 +22,7 @@
                         'ecuc-black': '#0B0B0C',
                         'ecuc-graphite': '#121214',
                         'ecuc-gold': '#D4AF37',
-                        'ecuc-gold-dim': '#AA8C2C', // Un tono más oscuro para efectos hover
+                        'ecuc-gold-dim': '#AA8C2C',
                     },
                     fontFamily: {
                         'serif': ['"Playfair Display"', 'serif'],
@@ -40,15 +40,13 @@
             color: #FFFFFF;
         }
         
-        /* Clases para manejar el desvanecimiento suave */
+        /* Transición de desvanecimiento para cambiar de pantallas */
         .fade-transition {
             transition: opacity 0.6s ease-in-out;
         }
-        
         .fade-out {
             opacity: 0;
         }
-        
         .fade-in {
             opacity: 1;
         }
@@ -59,19 +57,16 @@
     <!-- Encabezado / Header -->
     <header class="fixed top-0 w-full z-50 bg-ecuc-black/90 backdrop-blur-md border-b border-ecuc-gold/20 p-6">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <!-- Logotipo Minimalista -->
             <div class="text-xl font-serif tracking-widest uppercase text-white">
-                ECUC <span class="text-ecuc-gold font-sans text-sm tracking-normal ml-2 opacity-80">El Laboratorio Comestible</span>
+                ECUC <span class="text-ecuc-gold font-sans text-sm tracking-normal ml-2 opacity-80 hidden md:inline">El Laboratorio Comestible</span>
             </div>
-            
-            <!-- Menú Rápido -->
             <nav class="hidden md:flex space-x-8 text-sm uppercase tracking-widest opacity-70">
                 <a href="#" class="hover:text-ecuc-gold transition-colors">Menú</a>
                 <a href="#" class="hover:text-ecuc-gold transition-colors">Manifiesto</a>
             </nav>
         </div>
         
-        <!-- Indicador de Progreso -->
+        <!-- Indicador de Progreso Dorado -->
         <div class="absolute bottom-0 left-0 h-[2px] bg-ecuc-gold/20 w-full">
             <div id="progress-bar" class="h-full bg-ecuc-gold transition-all duration-700 ease-out w-0"></div>
         </div>
@@ -80,23 +75,69 @@
     <!-- Contenedor Principal (SPA) -->
     <main id="app-container" class="flex-grow flex items-center justify-center pt-24 pb-12 px-6 max-w-6xl mx-auto w-full relative">
         
-        <!-- PANTALLA 1: Test Sensorial -->
-        <section id="screen-0" class="screen-section w-full fade-transition fade-in text-center">
-            <h1 class="text-4xl md:text-6xl font-serif text-ecuc-gold mb-6">Test Sensorial</h1>
-            <p class="max-w-2xl mx-auto text-lg opacity-80 font-light mb-10">
-                El viaje comienza afinando tus sentidos. Prepárate para descubrir perfiles de sabor que desafiarán tu percepción.
+        <!-- PANTALLA 1: Test Sensorial (ACTUALIZADA) -->
+        <section id="screen-0" class="screen-section w-full fade-transition fade-in flex flex-col items-center justify-center min-h-[70vh]">
+            <!-- Título misterioso y sofisticado -->
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif text-ecuc-gold mb-4 text-center">
+                ¿Qué despierta tu instinto creativo?
+            </h1>
+            <p class="max-w-2xl mx-auto text-lg opacity-60 font-light mb-12 text-center">
+                Selecciona la alquimia que más resuene con tus sentidos para revelar tu camino culinario.
             </p>
-            <button onclick="app.nextScreen()" class="px-8 py-3 border border-ecuc-gold text-ecuc-gold hover:bg-ecuc-gold hover:text-ecuc-black transition-all duration-300 uppercase tracking-widest text-sm">
-                Comenzar Exploración
-            </button>
+
+            <!-- Grid de Tarjetas Interactivas -->
+            <!-- La clase 'group' aquí permite que, al pasar el mouse sobre el contenedor, afectemos a todas las tarjetas -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full group">
+                
+                <!-- Tarjeta A: Panadería -->
+                <!-- hover:!opacity-100 asegura que la tarjeta que tocas no se oscurezca, mientras las demás sí -->
+                <div onclick="app.selectProfile('panaderia')" class="relative cursor-pointer rounded-xl overflow-hidden border border-ecuc-gold/20 transition-all duration-500 hover:scale-105 hover:border-ecuc-gold hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] opacity-100 group-hover:opacity-40 hover:!opacity-100 bg-ecuc-graphite h-96 flex items-end">
+                    <!-- Imagen de fondo (Unsplash) -->
+                    <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=800&auto=format&fit=crop" alt="Pan Rústico de Masa Madre" class="absolute inset-0 w-full h-full object-cover z-0 opacity-70">
+                    <!-- Degradado oscuro inferior para que el texto sea legible -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-ecuc-black via-ecuc-black/40 to-transparent z-10"></div>
+                    <!-- Contenido de la tarjeta -->
+                    <div class="relative z-20 p-6 w-full text-center">
+                        <span class="text-xs uppercase tracking-[0.3em] text-ecuc-gold/80 mb-2 block">Rama 01</span>
+                        <h3 class="text-2xl font-serif text-white mb-2">Pan Rústico de Masa Madre</h3>
+                        <p class="text-sm text-white/70 font-light">Fermentación, texturas crujientes, el poder del calor y el tiempo.</p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta B: Repostería -->
+                <div onclick="app.selectProfile('reposteria')" class="relative cursor-pointer rounded-xl overflow-hidden border border-ecuc-gold/20 transition-all duration-500 hover:scale-105 hover:border-ecuc-gold hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] opacity-100 group-hover:opacity-40 hover:!opacity-100 bg-ecuc-graphite h-96 flex items-end">
+                    <img src="https://images.unsplash.com/photo-1603569283847-aa295f0d016a?q=80&w=800&auto=format&fit=crop" alt="Postre Glaseado de Vanguardia" class="absolute inset-0 w-full h-full object-cover z-0 opacity-70">
+                    <div class="absolute inset-0 bg-gradient-to-t from-ecuc-black via-ecuc-black/40 to-transparent z-10"></div>
+                    <div class="relative z-20 p-6 w-full text-center">
+                        <span class="text-xs uppercase tracking-[0.3em] text-ecuc-gold/80 mb-2 block">Rama 02</span>
+                        <h3 class="text-2xl font-serif text-white mb-2">Postre Glaseado de Vanguardia</h3>
+                        <p class="text-sm text-white/70 font-light">Simetría perfecta, alquimia del chocolate y capas sofisticadas.</p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta C: Gastronomía -->
+                <div onclick="app.selectProfile('gastronomia')" class="relative cursor-pointer rounded-xl overflow-hidden border border-ecuc-gold/20 transition-all duration-500 hover:scale-105 hover:border-ecuc-gold hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] opacity-100 group-hover:opacity-40 hover:!opacity-100 bg-ecuc-graphite h-96 flex items-end">
+                    <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?q=80&w=800&auto=format&fit=crop" alt="Platillo Salado de Autor" class="absolute inset-0 w-full h-full object-cover z-0 opacity-70">
+                    <div class="absolute inset-0 bg-gradient-to-t from-ecuc-black via-ecuc-black/40 to-transparent z-10"></div>
+                    <div class="relative z-20 p-6 w-full text-center">
+                        <span class="text-xs uppercase tracking-[0.3em] text-ecuc-gold/80 mb-2 block">Rama 03</span>
+                        <h3 class="text-2xl font-serif text-white mb-2">Platillo Salado de Autor</h3>
+                        <p class="text-sm text-white/70 font-light">Técnicas moleculares, deconstrucción y equilibrio absoluto de sabores.</p>
+                    </div>
+                </div>
+                
+            </div>
         </section>
 
-        <!-- PANTALLA 2: ADN Culinario -->
+        <!-- PANTALLA 2: ADN Culinario (Temporalmente simple, la desarrollaremos luego) -->
         <section id="screen-1" class="screen-section hidden w-full fade-transition fade-out text-center">
             <h2 class="text-4xl md:text-6xl font-serif text-ecuc-gold mb-6">ADN Culinario</h2>
             <p class="max-w-2xl mx-auto text-lg opacity-80 font-light mb-10">
                 Hemos analizado tus respuestas. Tu perfil de alquimia gastronómica está listo para ser revelado.
             </p>
+            <!-- Este texto cambiará dinámicamente según lo que el usuario haya elegido -->
+            <p id="perfil-resultado" class="text-2xl font-serif text-white mb-10 opacity-70"></p>
+            
             <button onclick="app.nextScreen()" class="px-8 py-3 border border-ecuc-gold text-ecuc-gold hover:bg-ecuc-gold hover:text-ecuc-black transition-all duration-300 uppercase tracking-widest text-sm">
                 Ir a la Mesa de Trabajo
             </button>
@@ -126,14 +167,14 @@
 
     </main>
 
-    <!-- Lógica de la Aplicación -->
+    <!-- Lógica de la Aplicación (JavaScript) -->
     <script>
-        // Estructura de datos para controlar las pantallas
         const app = {
             currentIndex: 0,
             isTransitioning: false,
+            // Nueva variable para guardar la preferencia del usuario
+            perfilUsuario: null, 
             
-            // Definición de nuestra arquitectura de pantallas
             screens: [
                 { id: 'screen-0', name: 'Test Sensorial' },
                 { id: 'screen-1', name: 'ADN Culinario' },
@@ -141,12 +182,28 @@
                 { id: 'screen-3', name: 'Sello Dorado' }
             ],
 
-            // Inicializar la aplicación
             init() {
                 this.updateProgress();
             },
 
-            // Función para avanzar a la siguiente pantalla
+            // Función NUEVA: Guarda la selección y avanza a la siguiente pantalla
+            selectProfile(seleccion) {
+                // Prevenimos clics múltiples si ya está haciendo la transición
+                if (this.isTransitioning) return;
+                
+                // 1. Guardamos la selección
+                this.perfilUsuario = seleccion;
+                
+                // 2. Opcional: Actualizamos el texto de la pantalla 2 para demostrar que funcionó
+                const textoResultado = document.getElementById('perfil-resultado');
+                if (seleccion === 'panaderia') textoResultado.innerText = "Tu camino es la Panadería Rústica.";
+                if (seleccion === 'reposteria') textoResultado.innerText = "Tu camino es la Repostería de Vanguardia.";
+                if (seleccion === 'gastronomia') textoResultado.innerText = "Tu camino es la Gastronomía de Autor.";
+                
+                // 3. Avanzamos de pantalla
+                this.nextScreen();
+            },
+
             nextScreen() {
                 if (this.isTransitioning || this.currentIndex >= this.screens.length - 1) return;
                 
@@ -157,32 +214,27 @@
                 this.transitionBetween(currentSection, nextSection);
             },
 
-            // Función para reiniciar la experiencia
             resetExperience() {
                 if (this.isTransitioning) return;
                 
                 const currentSection = document.getElementById(`screen-${this.currentIndex}`);
                 this.currentIndex = 0;
+                this.perfilUsuario = null; // Limpiamos la selección al reiniciar
                 const firstSection = document.getElementById(`screen-0`);
                 
                 this.transitionBetween(currentSection, firstSection);
             },
 
-            // Lógica de transición suave entre pantallas
             transitionBetween(hideSection, showSection) {
                 this.isTransitioning = true;
                 
-                // 1. Iniciar desvanecimiento de la pantalla actual
                 hideSection.classList.remove('fade-in');
                 hideSection.classList.add('fade-out');
                 
-                // 2. Esperar a que termine la transición CSS (600ms)
                 setTimeout(() => {
                     hideSection.classList.add('hidden');
                     
-                    // Preparar y mostrar la nueva pantalla
                     showSection.classList.remove('hidden');
-                    // Un pequeño retraso para asegurar que el navegador registre que quitamos el 'hidden'
                     setTimeout(() => {
                         showSection.classList.remove('fade-out');
                         showSection.classList.add('fade-in');
@@ -194,16 +246,13 @@
                 }, 600);
             },
 
-            // Actualiza la barra de progreso en el encabezado
             updateProgress() {
                 const progressBar = document.getElementById('progress-bar');
-                // Calcula el porcentaje (ej. si estoy en la última pantalla es 100%)
                 const percentage = (this.currentIndex / (this.screens.length - 1)) * 100;
                 progressBar.style.width = `${percentage}%`;
             }
         };
 
-        // Arrancar la aplicación una vez que el DOM esté listo
         document.addEventListener('DOMContentLoaded', () => {
             app.init();
         });
