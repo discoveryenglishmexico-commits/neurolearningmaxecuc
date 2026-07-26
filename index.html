@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ECUC - El Laboratorio Comestible</title>
     
-    <!-- Google Fonts: Playfair Display (Serif) e Inter (Sans-serif) -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS CDN para los estilos -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Configuración personalizada de nuestros colores de lujo -->
+    <!-- Configuración de colores -->
     <script>
         tailwind.config = {
             theme: {
@@ -33,14 +33,12 @@
         }
     </script>
 
-    <!-- Estilos personalizados para las transiciones -->
+    <!-- Estilos de transición -->
     <style>
         body {
             background-color: #0B0B0C;
             color: #FFFFFF;
         }
-        
-        /* Transición de desvanecimiento para cambiar de pantallas */
         .fade-transition {
             transition: opacity 0.6s ease-in-out;
         }
@@ -54,19 +52,13 @@
 </head>
 <body class="font-sans antialiased min-h-screen flex flex-col selection:bg-ecuc-gold selection:text-ecuc-black">
 
-    <!-- Encabezado / Header -->
+    <!-- Encabezado -->
     <header class="fixed top-0 w-full z-50 bg-ecuc-black/90 backdrop-blur-md border-b border-ecuc-gold/20 p-6">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <div class="text-xl font-serif tracking-widest uppercase text-white">
                 ECUC <span class="text-ecuc-gold font-sans text-sm tracking-normal ml-2 opacity-80 hidden md:inline">El Laboratorio Comestible</span>
             </div>
-            <nav class="hidden md:flex space-x-8 text-sm uppercase tracking-widest opacity-70">
-                <a href="#" class="hover:text-ecuc-gold transition-colors">Menú</a>
-                <a href="#" class="hover:text-ecuc-gold transition-colors">Manifiesto</a>
-            </nav>
         </div>
-        
-        <!-- Indicador de Progreso Dorado -->
         <div class="absolute bottom-0 left-0 h-[2px] bg-ecuc-gold/20 w-full">
             <div id="progress-bar" class="h-full bg-ecuc-gold transition-all duration-700 ease-out w-0"></div>
         </div>
@@ -75,69 +67,72 @@
     <!-- Contenedor Principal (SPA) -->
     <main id="app-container" class="flex-grow flex items-center justify-center pt-24 pb-12 px-6 max-w-6xl mx-auto w-full relative">
         
-        <!-- PANTALLA 1: Test Sensorial (ACTUALIZADA) -->
+        <!-- PANTALLA 1: Test Sensorial (Pregunta y Opciones) -->
         <section id="screen-0" class="screen-section w-full fade-transition fade-in flex flex-col items-center justify-center min-h-[70vh]">
-            <!-- Título misterioso y sofisticado -->
+            
+            <!-- LA PREGUNTA -->
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif text-ecuc-gold mb-4 text-center">
                 ¿Qué despierta tu instinto creativo?
             </h1>
-            <p class="max-w-2xl mx-auto text-lg opacity-60 font-light mb-12 text-center">
-                Selecciona la alquimia que más resuene con tus sentidos para revelar tu camino culinario.
+            
+            <!-- INSTRUCCIÓN CLARA PARA EL USUARIO -->
+            <p class="max-w-2xl mx-auto text-lg opacity-80 font-light mb-2 text-center text-white">
+                Para comenzar tu evaluación, elige una de las siguientes tres respuestas visuales:
+            </p>
+            <p class="max-w-2xl mx-auto text-sm opacity-50 font-light mb-12 text-center">
+                (Haz clic en la imagen que mejor represente tu inspiración)
             </p>
 
-            <!-- Grid de Tarjetas Interactivas -->
-            <!-- La clase 'group' aquí permite que, al pasar el mouse sobre el contenedor, afectemos a todas las tarjetas -->
+            <!-- LAS OPCIONES DE RESPUESTA (Tarjetas) -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full group">
                 
-                <!-- Tarjeta A: Panadería -->
-                <!-- hover:!opacity-100 asegura que la tarjeta que tocas no se oscurezca, mientras las demás sí -->
-                <div onclick="app.selectProfile('panaderia')" class="relative cursor-pointer rounded-xl overflow-hidden border border-ecuc-gold/20 transition-all duration-500 hover:scale-105 hover:border-ecuc-gold hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] opacity-100 group-hover:opacity-40 hover:!opacity-100 bg-ecuc-graphite h-96 flex items-end">
-                    <!-- Imagen de fondo (Unsplash) -->
-                    <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=800&auto=format&fit=crop" alt="Pan Rústico de Masa Madre" class="absolute inset-0 w-full h-full object-cover z-0 opacity-70">
-                    <!-- Degradado oscuro inferior para que el texto sea legible -->
-                    <div class="absolute inset-0 bg-gradient-to-t from-ecuc-black via-ecuc-black/40 to-transparent z-10"></div>
-                    <!-- Contenido de la tarjeta -->
-                    <div class="relative z-20 p-6 w-full text-center">
-                        <span class="text-xs uppercase tracking-[0.3em] text-ecuc-gold/80 mb-2 block">Rama 01</span>
-                        <h3 class="text-2xl font-serif text-white mb-2">Pan Rústico de Masa Madre</h3>
-                        <p class="text-sm text-white/70 font-light">Fermentación, texturas crujientes, el poder del calor y el tiempo.</p>
+                <!-- Opción A: Panadería -->
+                <div onclick="app.selectProfile('panaderia')" class="relative cursor-pointer rounded-xl overflow-hidden border border-ecuc-gold/20 transition-all duration-500 hover:scale-105 hover:border-ecuc-gold hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] opacity-100 group-hover:opacity-40 hover:!opacity-100 bg-ecuc-graphite h-[400px] flex items-end">
+                    <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=800&auto=format&fit=crop" alt="Pan Rústico" class="absolute inset-0 w-full h-full object-cover z-0 opacity-70">
+                    <div class="absolute inset-0 bg-gradient-to-t from-ecuc-black via-ecuc-black/60 to-transparent z-10"></div>
+                    <div class="relative z-20 p-6 w-full text-center flex flex-col h-full justify-end">
+                        <span class="text-xs uppercase tracking-[0.3em] text-ecuc-gold/80 mb-2 block">Opción A</span>
+                        <h3 class="text-2xl font-serif text-white mb-2">Fuego y Fermentación</h3>
+                        <p class="text-sm text-white/70 font-light mb-6">Pan rústico, texturas crujientes, el poder del calor y el tiempo de espera.</p>
+                        <!-- Indicador visual de botón -->
+                        <div class="text-xs uppercase tracking-widest border border-ecuc-gold text-ecuc-gold py-2 px-4 rounded-full self-center">Elegir esta respuesta</div>
                     </div>
                 </div>
 
-                <!-- Tarjeta B: Repostería -->
-                <div onclick="app.selectProfile('reposteria')" class="relative cursor-pointer rounded-xl overflow-hidden border border-ecuc-gold/20 transition-all duration-500 hover:scale-105 hover:border-ecuc-gold hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] opacity-100 group-hover:opacity-40 hover:!opacity-100 bg-ecuc-graphite h-96 flex items-end">
-                    <img src="https://images.unsplash.com/photo-1603569283847-aa295f0d016a?q=80&w=800&auto=format&fit=crop" alt="Postre Glaseado de Vanguardia" class="absolute inset-0 w-full h-full object-cover z-0 opacity-70">
-                    <div class="absolute inset-0 bg-gradient-to-t from-ecuc-black via-ecuc-black/40 to-transparent z-10"></div>
-                    <div class="relative z-20 p-6 w-full text-center">
-                        <span class="text-xs uppercase tracking-[0.3em] text-ecuc-gold/80 mb-2 block">Rama 02</span>
-                        <h3 class="text-2xl font-serif text-white mb-2">Postre Glaseado de Vanguardia</h3>
-                        <p class="text-sm text-white/70 font-light">Simetría perfecta, alquimia del chocolate y capas sofisticadas.</p>
+                <!-- Opción B: Repostería -->
+                <div onclick="app.selectProfile('reposteria')" class="relative cursor-pointer rounded-xl overflow-hidden border border-ecuc-gold/20 transition-all duration-500 hover:scale-105 hover:border-ecuc-gold hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] opacity-100 group-hover:opacity-40 hover:!opacity-100 bg-ecuc-graphite h-[400px] flex items-end">
+                    <img src="https://images.unsplash.com/photo-1603569283847-aa295f0d016a?q=80&w=800&auto=format&fit=crop" alt="Postre Glaseado" class="absolute inset-0 w-full h-full object-cover z-0 opacity-70">
+                    <div class="absolute inset-0 bg-gradient-to-t from-ecuc-black via-ecuc-black/60 to-transparent z-10"></div>
+                    <div class="relative z-20 p-6 w-full text-center flex flex-col h-full justify-end">
+                        <span class="text-xs uppercase tracking-[0.3em] text-ecuc-gold/80 mb-2 block">Opción B</span>
+                        <h3 class="text-2xl font-serif text-white mb-2">Simetría y Dulzura</h3>
+                        <p class="text-sm text-white/70 font-light mb-6">Postres de vanguardia, alquimia del chocolate y capas sofisticadas.</p>
+                        <div class="text-xs uppercase tracking-widest border border-ecuc-gold text-ecuc-gold py-2 px-4 rounded-full self-center">Elegir esta respuesta</div>
                     </div>
                 </div>
 
-                <!-- Tarjeta C: Gastronomía -->
-                <div onclick="app.selectProfile('gastronomia')" class="relative cursor-pointer rounded-xl overflow-hidden border border-ecuc-gold/20 transition-all duration-500 hover:scale-105 hover:border-ecuc-gold hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] opacity-100 group-hover:opacity-40 hover:!opacity-100 bg-ecuc-graphite h-96 flex items-end">
-                    <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?q=80&w=800&auto=format&fit=crop" alt="Platillo Salado de Autor" class="absolute inset-0 w-full h-full object-cover z-0 opacity-70">
-                    <div class="absolute inset-0 bg-gradient-to-t from-ecuc-black via-ecuc-black/40 to-transparent z-10"></div>
-                    <div class="relative z-20 p-6 w-full text-center">
-                        <span class="text-xs uppercase tracking-[0.3em] text-ecuc-gold/80 mb-2 block">Rama 03</span>
-                        <h3 class="text-2xl font-serif text-white mb-2">Platillo Salado de Autor</h3>
-                        <p class="text-sm text-white/70 font-light">Técnicas moleculares, deconstrucción y equilibrio absoluto de sabores.</p>
+                <!-- Opción C: Gastronomía -->
+                <div onclick="app.selectProfile('gastronomia')" class="relative cursor-pointer rounded-xl overflow-hidden border border-ecuc-gold/20 transition-all duration-500 hover:scale-105 hover:border-ecuc-gold hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] opacity-100 group-hover:opacity-40 hover:!opacity-100 bg-ecuc-graphite h-[400px] flex items-end">
+                    <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?q=80&w=800&auto=format&fit=crop" alt="Alta Cocina" class="absolute inset-0 w-full h-full object-cover z-0 opacity-70">
+                    <div class="absolute inset-0 bg-gradient-to-t from-ecuc-black via-ecuc-black/60 to-transparent z-10"></div>
+                    <div class="relative z-20 p-6 w-full text-center flex flex-col h-full justify-end">
+                        <span class="text-xs uppercase tracking-[0.3em] text-ecuc-gold/80 mb-2 block">Opción C</span>
+                        <h3 class="text-2xl font-serif text-white mb-2">Técnica y Deconstrucción</h3>
+                        <p class="text-sm text-white/70 font-light mb-6">Alta cocina salada, técnicas moleculares y equilibrio absoluto de sabores.</p>
+                        <div class="text-xs uppercase tracking-widest border border-ecuc-gold text-ecuc-gold py-2 px-4 rounded-full self-center">Elegir esta respuesta</div>
                     </div>
                 </div>
                 
             </div>
         </section>
 
-        <!-- PANTALLA 2: ADN Culinario (Temporalmente simple, la desarrollaremos luego) -->
+        <!-- PANTALLA 2: ADN Culinario (Temporal) -->
         <section id="screen-1" class="screen-section hidden w-full fade-transition fade-out text-center">
             <h2 class="text-4xl md:text-6xl font-serif text-ecuc-gold mb-6">ADN Culinario</h2>
             <p class="max-w-2xl mx-auto text-lg opacity-80 font-light mb-10">
-                Hemos analizado tus respuestas. Tu perfil de alquimia gastronómica está listo para ser revelado.
+                Hemos analizado tu respuesta. Tu perfil de alquimia gastronómica está listo para ser revelado.
             </p>
-            <!-- Este texto cambiará dinámicamente según lo que el usuario haya elegido -->
             <p id="perfil-resultado" class="text-2xl font-serif text-white mb-10 opacity-70"></p>
-            
             <button onclick="app.nextScreen()" class="px-8 py-3 border border-ecuc-gold text-ecuc-gold hover:bg-ecuc-gold hover:text-ecuc-black transition-all duration-300 uppercase tracking-widest text-sm">
                 Ir a la Mesa de Trabajo
             </button>
@@ -147,18 +142,18 @@
         <section id="screen-2" class="screen-section hidden w-full fade-transition fade-out text-center">
             <h2 class="text-4xl md:text-6xl font-serif text-ecuc-gold mb-6">Mesa de Trabajo</h2>
             <p class="max-w-2xl mx-auto text-lg opacity-80 font-light mb-10">
-                Interactúa con los ingredientes. Mezcla, experimenta y descubre el balance perfecto en nuestro entorno virtual.
+                Interactúa con los ingredientes. Mezcla, experimenta y descubre el balance perfecto.
             </p>
             <button onclick="app.nextScreen()" class="px-8 py-3 border border-ecuc-gold text-ecuc-gold hover:bg-ecuc-gold hover:text-ecuc-black transition-all duration-300 uppercase tracking-widest text-sm">
                 Sellar Creación
             </button>
         </section>
 
-        <!-- PANTALLA 4: Sello Dorado y Pasaporte -->
+        <!-- PANTALLA 4: Sello Dorado -->
         <section id="screen-3" class="screen-section hidden w-full fade-transition fade-out text-center">
             <h2 class="text-4xl md:text-6xl font-serif text-ecuc-gold mb-6">Pasaporte Culinario</h2>
             <p class="max-w-2xl mx-auto text-lg opacity-80 font-light mb-10">
-                Tu experiencia ha concluido con éxito. Aquí tienes tu sello dorado, un testimonio de tu viaje por El Laboratorio Comestible.
+                Tu experiencia ha concluido con éxito. Aquí tienes tu sello dorado.
             </p>
             <button onclick="app.resetExperience()" class="px-8 py-3 bg-ecuc-gold text-ecuc-black hover:bg-ecuc-gold-dim transition-all duration-300 uppercase tracking-widest text-sm font-semibold">
                 Iniciar Nueva Experiencia
@@ -167,12 +162,11 @@
 
     </main>
 
-    <!-- Lógica de la Aplicación (JavaScript) -->
+    <!-- Lógica de la Aplicación -->
     <script>
         const app = {
             currentIndex: 0,
             isTransitioning: false,
-            // Nueva variable para guardar la preferencia del usuario
             perfilUsuario: null, 
             
             screens: [
@@ -186,21 +180,16 @@
                 this.updateProgress();
             },
 
-            // Función NUEVA: Guarda la selección y avanza a la siguiente pantalla
             selectProfile(seleccion) {
-                // Prevenimos clics múltiples si ya está haciendo la transición
                 if (this.isTransitioning) return;
                 
-                // 1. Guardamos la selección
                 this.perfilUsuario = seleccion;
                 
-                // 2. Opcional: Actualizamos el texto de la pantalla 2 para demostrar que funcionó
                 const textoResultado = document.getElementById('perfil-resultado');
                 if (seleccion === 'panaderia') textoResultado.innerText = "Tu camino es la Panadería Rústica.";
                 if (seleccion === 'reposteria') textoResultado.innerText = "Tu camino es la Repostería de Vanguardia.";
                 if (seleccion === 'gastronomia') textoResultado.innerText = "Tu camino es la Gastronomía de Autor.";
                 
-                // 3. Avanzamos de pantalla
                 this.nextScreen();
             },
 
@@ -219,7 +208,7 @@
                 
                 const currentSection = document.getElementById(`screen-${this.currentIndex}`);
                 this.currentIndex = 0;
-                this.perfilUsuario = null; // Limpiamos la selección al reiniciar
+                this.perfilUsuario = null; 
                 const firstSection = document.getElementById(`screen-0`);
                 
                 this.transitionBetween(currentSection, firstSection);
